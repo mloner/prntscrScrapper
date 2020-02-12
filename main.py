@@ -1,7 +1,5 @@
-#Credits to 'nazarpechka' for helping out with this code
-
 import string, random, os, sys, _thread, httplib2, time
-# from PIL import Image
+
 
 if len(sys.argv) < 2:
     sys.exit("\033[37mUsage: python3 " + sys.argv[0] + " (Number of threads)")
