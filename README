@@ -7,4 +7,4 @@ HOW TO RUN:
   python main.py countOfThreads countOfPictures
 
 BUGS:
-  1.sometimes the script gets one-two more pics than countOfPictures 
+  1.sometimes the script gets more pics than countOfPictures 
