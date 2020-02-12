@@ -8,8 +8,13 @@ THREAD_AMOUNT = int(sys.argv[1])
 INVALID = [0, 503, 5082, 4939, 4940, 4941, 12003, 5556]
 countOfPictures = 0
 def scrape_pictures(thread):
+    #print(sys.argv[2])
+    global countOfPictures
     while True:
-        global countOfPictures
+        if len(sys.argv) > 2 and countOfPictures >= int(sys.argv[2]):
+            # print('done' + str(_thread.get_ident()))
+            #print('done thread')
+            sys.exit()
         url = 'http://i.imgur.com/'
         length = random.choice((5, 6))
         if length == 5:
@@ -37,9 +42,6 @@ def scrape_pictures(thread):
                 os.remove('pcs/' + filename)
             else:
                 countOfPictures += 1
-                if countOfPictures >= 10:
-                    print('done' + str(_thread.get_ident()))
-                    sys.exit()
                 #print(str(response.status) + " [+] Valid: " + url)
 
 for thread in range(1, THREAD_AMOUNT + 1):
