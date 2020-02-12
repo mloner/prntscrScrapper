@@ -23,7 +23,7 @@ def scrape_pictures(thread):
             url += ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(3))
             url += ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(3))
         url += '.jpg'
-        # print (url)
+        # print(url)
 
         filename = url.rsplit('/', 1)[-1]
         # print (filename)
