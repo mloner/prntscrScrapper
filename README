@@ -6,5 +6,3 @@ HOW TO RUN:
   OR
   python main.py countOfThreads countOfPictures
 
-BUGS:
-  1.sometimes the script gets more pics than countOfPictures 
