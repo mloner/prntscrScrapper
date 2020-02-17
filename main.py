@@ -8,17 +8,18 @@ INVALID = [0, 503, 5082, 4939, 4940, 4941, 12003, 5556]
 picsInThread = []
 currentPicsInThread = []
 done = False
-count = int(sys.argv[2]) // int(sys.argv[1])
+if len(sys.argv) > 2:
+    count = int(sys.argv[2]) // int(sys.argv[1])
 
-for i in range(int(sys.argv[1])):
-    currentPicsInThread.append(0)
+    for i in range(int(sys.argv[1])):
+        currentPicsInThread.append(0)
 
-for i in range(int(sys.argv[1])):
-    picsInThread.append(count)
+    for i in range(int(sys.argv[1])):
+        picsInThread.append(count)
 
-if int(sys.argv[2]) % int(sys.argv[1]) != 0:
-    last = int(sys.argv[2]) - int(sys.argv[1]) * count
-    picsInThread[int(sys.argv[1]) - 1] += last
+    if int(sys.argv[2]) % int(sys.argv[1]) != 0:
+        last = int(sys.argv[2]) - int(sys.argv[1]) * count
+        picsInThread[int(sys.argv[1]) - 1] += last
 
 def scrape_pictures(thread):
     global done
@@ -49,7 +50,8 @@ def scrape_pictures(thread):
             if file_size in INVALID:
                 os.remove('pcs/' + filename)
             else:
-                currentPicsInThread[int(thread) - 1] += 1
+                if len(sys.argv) > 2:
+                    currentPicsInThread[int(thread) - 1] += 1
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.cache' + thread)
             shutil.rmtree(path)
 
