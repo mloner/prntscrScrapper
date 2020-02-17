@@ -1,14 +1,15 @@
 import string, random, os, sys, _thread, httplib2, shutil
 
-if len(sys.argv) < 2:
-    sys.exit("\033[37mUsage: python3 " + sys.argv[0] + " (Number of threads)")
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    sys.exit("Number of arguments must be [1..2])")
 
 THREAD_AMOUNT = int(sys.argv[1])
-INVALID = [0, 503, 5082, 4939, 4940, 4941, 12003, 5556]
-picsInThread = []
-currentPicsInThread = []
-done = False
-if len(sys.argv) > 2:
+INVALID = [0, 503, 5082, 4939, 4940, 4941, 12003, 5556] #codes of wrong data
+picsInThread = [] #target amount of pics by every thread
+currentPicsInThread = [] #current amount of pics by every thread
+done = False #flag of end of program
+
+if len(sys.argv) > 2: #if have threads count
     count = int(sys.argv[2]) // int(sys.argv[1])
 
     for i in range(int(sys.argv[1])):
@@ -31,7 +32,7 @@ def scrape_pictures(thread):
                 done = True
             sys.exit()
         url = 'http://i.imgur.com/'
-        length = random.choice((5, 6))
+        length = random.choice((5, 6)) #choise of pic code length
         if length == 5:
             url += ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
         else:
@@ -42,18 +43,18 @@ def scrape_pictures(thread):
         h = httplib2.Http('.cache' + thread)
         response, content = h.request(url)
         response = h.request(url)[0]
-        if response.status == 200:
+        if response.status == 200: #adress exists
             out = open('pcs/' + filename, 'wb')
             out.write(content)
             out.close()
             file_size = os.path.getsize('pcs/' + filename)
-            if file_size in INVALID:
+            if file_size in INVALID: #pic does not exist
                 os.remove('pcs/' + filename)
             else:
                 if len(sys.argv) > 2:
                     currentPicsInThread[int(thread) - 1] += 1
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.cache' + thread)
-            shutil.rmtree(path)
+            shutil.rmtree(path) #delete temp folder
 
 for thread in range(1, THREAD_AMOUNT + 1):
     thread = str(thread)
